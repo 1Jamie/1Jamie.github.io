@@ -1,0 +1,29 @@
+{
+  "launch_path": "/index.html",
+  "default_locale": "en",
+  "fullscreen": "true",
+  "orientation": [
+    "portrait"
+  ],
+  "icons": {
+ "128": "/icon/128x128.png"
+},
+
+  "name": "Camera",
+  "version": "0.0.1",
+  "description": "proposed b2g camera app",
+  "locales": {
+    "en_US": {
+      "name": "Test camera"
+    }
+  },
+  "type": "privileged",
+  "permissions": {
+
+    "systemXHR": {},
+    "READ_EXTERNAL_STORAGE": {},
+    "WRITE_EXTERNAL_STORAGE": {},
+    "CAMERA": {},
+    "CAPTURE_VIDEO_OUTPUT": {}
+  }
+}

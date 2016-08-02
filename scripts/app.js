@@ -8,6 +8,17 @@
 
   var streaming = false;
 
+  // does the obvious... obviously clears the photo
+
+  function clearPic() {
+    var context = canvas.getContext('2d');
+    context.fillStyle = "#AAA";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    var data = canvas.toDataURL('image/png');
+    photo.setAttribute('src', data);
+  }
+
 //initalizing the elements properties we need and assigning to the specific elements
 
   var video = null;
@@ -15,11 +26,15 @@
   var photo = null;
   var startbutton = null;
 
+  console.log("variables set moving onto startup");
+
   function startup() {
-    video = document.getElementById('video');
+    video = document.getElementById('lFeed');
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
-    startbutton = document.getElementById('startbutton');
+    startbutton = document.getElementById('capture');
+
+    console.log("variables attaced to elements moving onto setting up get user media");
 
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
@@ -34,11 +49,14 @@
       function(stream) {
         if (navigator.mozGetUserMedia) {
           video.mozSrcObject = stream;
+          console.log('stream should be getting ready, you are on moz');
         } else {
           var vendorURL = window.URL || window.webkitURL;
           video.src = vendorURL.createObjectURL(stream);
+          console.log('stream should be ready now, you are on non-moz');
         }
         video.play();
+        console.log("feed should be displayed now, if not check for issues");
       },
       function(err) {
         console.log("An error occured! " + err);
@@ -62,25 +80,18 @@
       }
     }, false);
 
+    console.log('height and width of photo taken should now be set if not before');
+
     startbutton.addEventListener('click', function(ev){
       takepicture();
+       console.log("picture should have been taken")
       ev.preventDefault();
     }, false);
     
-    clearphoto();
+    clearPic();
   }
 
-// does the obvious... obviously clears the photo
 
-  function clearphoto() {
-    var context = canvas.getContext('2d');
-    context.fillStyle = "#AAA";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    var data = canvas.toDataURL('image/png');
-    photo.setAttribute('src', data);
-  }
-  
 //capture photo by taking a frame from the video feed and drawing it elsewhere then calling it
 
   function takepicture() {
@@ -93,10 +104,11 @@
       var data = canvas.toDataURL('image/png');
       photo.setAttribute('src', data);
     } else {
-      clearphoto();
+      clearPic();
     }
   }
 
-//setting up to start process
+// Start everything up after load
+
   window.addEventListener('load', startup, false);
 })();

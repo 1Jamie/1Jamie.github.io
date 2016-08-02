@@ -17,13 +17,4 @@
       "name": "Test camera"
     }
   },
-  "type": "privileged",
-  "permissions": {
-
-    "systemXHR": {},
-    "READ_EXTERNAL_STORAGE": {},
-    "WRITE_EXTERNAL_STORAGE": {},
-    "CAMERA": {},
-    "CAPTURE_VIDEO_OUTPUT": {}
-  }
 }

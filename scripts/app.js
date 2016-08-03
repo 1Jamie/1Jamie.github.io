@@ -91,6 +91,9 @@
     startbutton.addEventListener('click', function(ev){
       takepicture();
       console.log("picture should have been taken");
+       // its obviously beautful we have to save this shit!
+      //savePic();
+      //console.log("our shit should be saved");
       ev.preventDefault();
     }, false);
     
@@ -106,6 +109,19 @@ var datetime = currentdate.getDate() +
                 + currentdate.getMinutes() + 
                 + currentdate.getSeconds();
 
+//lets try to save it this way
+var savePic = function(){
+
+var img = canvas.toDataURL("img/png");
+//document.write('<img id="jpgImg" src="'+img'" style="display: none;" />');
+//document.write('<img id="jptImg" style="display: none:" src="'+img+'"/>');
+var oImg = document.createElement(img);
+oImg.setAttribute("src", '"'+img+'"');
+oImg.setAttribute("display", "none");
+document.body.appendchild(oImg);
+//var jpgImg = document.getElementById("jpgImg");
+};
+
 //capture our magnificintly setup frame from the video feed and drawing it elsewhere then calling it up
 
   function takepicture() {
@@ -116,7 +132,9 @@ var datetime = currentdate.getDate() +
       context.drawImage(video, 0, 0, width, height);
     
       var data = canvas.toDataURL('image/png');
-      photo.setAttribute('src', data);
+      photo.setAttribute('src', data)
+
+      save();
 
     } else {
       clearPic();
@@ -127,3 +145,17 @@ var datetime = currentdate.getDate() +
 
   window.addEventListener('load', startup, false);
 })();
+
+var save = function(){
+(canvas.toBlobHD || canvas.toBlob).call(canvas, function (b) {
+    var a = document.createElement("a");
+    a.textContent = "Download";
+    document.body.appendChild(a);
+    a.id = "clicker"
+    a.style.display = "none";
+    a.download = "test.jpg";
+    a.href = window.URL.createObjectURL(b);
+}, "image/png");
+var clicker = document.getElementById("clicker");
+clicker.click();
+};
